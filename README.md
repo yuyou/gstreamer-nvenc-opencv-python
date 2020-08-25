@@ -15,10 +15,14 @@ and unpack it under the current project folder, using the name ~"Video_Codec_SDK
 
 Note: The headerfile in SDK version 9 is under "./include" but SDK 10 is under "./Interface".
 
-# Build the image
+# Build the image(s)
 
 ```
-docker build -t yuyou/gstreamer-nvenc-opencv-python -f Dockerfile .
+docker build -t youyu/gstreamer-nvenc-opencv-python:1.14.5 -f Dockerfile .
+```
+Or
+```
+docker build -t youyu/gstreamer-nvenc-opencv-python:1.16.2 -f Dockerfile.16.2 .
 ```
 
 # Run the container
@@ -26,6 +30,6 @@ docker build -t yuyou/gstreamer-nvenc-opencv-python -f Dockerfile .
 
 ```
 xhost local:root
-docker run -it --gpus all -e NVIDIA_DRIVER_CAPABILITIES=all -e DISPLAY  -v /tmp/.X11-unix:/tmp/.X11-unix -e XAUTHORITY --rm -v $(pwd):/development yuyou/gstreamer-nvenc-opencv-python  bash
+docker run -it --gpus all -e NVIDIA_DRIVER_CAPABILITIES=all -e DISPLAY  -v /tmp/.X11-unix:/tmp/.X11-unix -e XAUTHORITY --rm -v $(pwd):/development youyu/gstreamer-nvenc-opencv-python  bash
 
 ```

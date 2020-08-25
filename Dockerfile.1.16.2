@@ -98,3 +98,9 @@ RUN apt install -y cmake python3-setuptools python3-wheel python3-pyqt5 python3-
   pip3 install opencv-python opencv-contrib-python
 
 
+# install https://github.com/jackersson/gstreamer-python
+
+RUN cd /home/gstreamer && \
+  git clone https://github.com/jackersson/gstreamer-python.git && \
+  cd gstreamer-python && \
+  python3 setup.py install

@@ -11,9 +11,6 @@ RUN add-apt-repository ppa:jonathonf/ffmpeg-4 \
 
 # install deps (gstreamer)
 
-# gstreamer ppa 1.16.2
-# RUN  add-apt-repository ppa:savoury1/ffmpeg4 && add-apt-repository ppa:savoury1/multimedia
-
 RUN apt-get update && apt-get -y --no-install-recommends install \
     sudo \
     vim \
@@ -85,7 +82,7 @@ RUN apt install -y \
 RUN cd /home/gstreamer && \
   git clone git://anongit.freedesktop.org/git/gstreamer/gst-python && \
   cd gst-python && \
-git checkout 1.16.2 && \
+git checkout $(gst-launch-1.0 --version | grep version | tr -s ' ' '\n' | tail -1) && \
 ./autogen.sh --disable-gtk-doc && \ 
 ./configure && \
 make -j && \
@@ -99,3 +96,9 @@ RUN apt install -y cmake python3-setuptools python3-wheel python3-pyqt5 python3-
   pip3 install opencv-python opencv-contrib-python
 
 
+# install https://github.com/jackersson/gstreamer-python
+
+RUN cd /home/gstreamer && \
+  git clone https://github.com/jackersson/gstreamer-python.git && \
+  cd gstreamer-python && \
+  python3 setup.py install
