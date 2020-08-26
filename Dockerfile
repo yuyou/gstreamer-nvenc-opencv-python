@@ -64,8 +64,8 @@ RUN cd /home/gstreamer && bash ./install_video_codec_sdk.sh
 RUN cd /home/gstreamer && bash ./build_nvidia_gst_plugins.sh
 
 
-# build gst_python
-RUN apt install -y \
+# # build gst_python
+RUN apt install -y --no-install-recommends \
     python3-gst-1.0 \
     python3-gi \
     python-gi-dev  \
@@ -79,26 +79,31 @@ RUN apt install -y \
     libcairo2-dev \
     gir1.2-gstreamer-1.0
 
-RUN cd /home/gstreamer && \
-  git clone git://anongit.freedesktop.org/git/gstreamer/gst-python && \
-  cd gst-python && \
-git checkout $(gst-launch-1.0 --version | grep version | tr -s ' ' '\n' | tail -1) && \
-./autogen.sh --disable-gtk-doc && \ 
-./configure && \
-make -j && \
-make install && \
-cp -RT ./gi/overrides /usr/lib/python3/dist-packages/gi/overrides/ 
+# RUN cd /home/gstreamer && \
+#   git clone git://anongit.freedesktop.org/git/gstreamer/gst-python && \
+#   cd gst-python && \
+# git checkout $(gst-launch-1.0 --version | grep version | tr -s ' ' '\n' | tail -1) && \
+# ./autogen.sh --disable-gtk-doc && \ 
+# ./configure && \
+# make -j && \
+# make install && \
+# cp -RT ./gi/overrides /usr/lib/python3/dist-packages/gi/overrides/ 
 
-# install OpenCV 4
-RUN apt install -y cmake python3-setuptools python3-wheel python3-pyqt5 python3-pyqt5.qtopengl && \
-  apt remove -y python3-cairo && \
-  pip3 install pycairo meson vispy watchdog  imutils dataclasses pygobject scikit-build && \
-  pip3 install opencv-python opencv-contrib-python
+# # install OpenCV 4
+RUN apt install -y --no-install-recommends \
+    cmake python3-setuptools python3-wheel python3-pyqt5 python3-pyqt5.qtopengl && \
+   apt remove -y python3-cairo && \
+   pip3 install pycairo meson vispy watchdog  imutils dataclasses pygobject scikit-build
+#   pip3 install opencv-python opencv-contrib-python
 
 
-# install https://github.com/jackersson/gstreamer-python
+# # install https://github.com/jackersson/gstreamer-python
 
-RUN cd /home/gstreamer && \
-  git clone https://github.com/jackersson/gstreamer-python.git && \
-  cd gstreamer-python && \
-  python3 setup.py install
+# RUN cd /home/gstreamer && \
+#   git clone https://github.com/jackersson/gstreamer-python.git && \
+#   cd gstreamer-python && \
+#   python3 setup.py install
+
+# OpenCV4
+
+RUN pip3 install opencv-python opencv-contrib-python
